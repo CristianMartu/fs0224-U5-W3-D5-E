@@ -53,9 +53,10 @@ public class EventController {
         this.eventService.delete(eventId);
     }
 
-    @PutMapping("/reservation")
-    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER', 'NORMAL_USER')")
-    public Event updateProfile(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody EventResponseDTO eventResponseDTO){
-        return this.eventService.addUserToEvent(currentAuthenticatedUser.getId(), eventResponseDTO);
-    }
+    // da sistemare
+//    @PutMapping("/reservation")
+//    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER', 'NORMAL_USER')")
+//    public Event updateProfile(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody EventResponseDTO eventResponseDTO){
+//        return this.eventService.addUserToEvent(currentAuthenticatedUser.getId(), eventResponseDTO);
+//    }
 }
