@@ -40,6 +40,17 @@ public class EventService {
         return this.eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(eventId));
     }
 
+    public Event update(UUID id, EventDTO updateEvent){
+        Event event = this.findByID(id);
+        event.setTitle(updateEvent.title());
+        event.setPlace(updateEvent.place());
+        event.setDate(updateEvent.date());
+        event.setQuantity(updateEvent.quantity());
+        event.setDescription(updateEvent.description());
+        event.setUserOrganizer(this.userService.findByID(UUID.fromString(updateEvent.userOrganizerId())));
+        return this.eventRepository.save(event);
+    }
+
     public void delete(UUID eventId) {
         Event event = this.findByID(eventId);
         this.eventRepository.delete(event);

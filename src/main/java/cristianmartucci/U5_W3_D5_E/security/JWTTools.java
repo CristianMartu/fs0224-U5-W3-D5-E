@@ -17,7 +17,7 @@ public class JWTTools {
     public String createToken(User employee){
         return Jwts.builder()
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 20))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 10))
                 .subject(String.valueOf(employee.getId()))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();

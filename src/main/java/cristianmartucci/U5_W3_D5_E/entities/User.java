@@ -1,5 +1,6 @@
 package cristianmartucci.U5_W3_D5_E.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import cristianmartucci.U5_W3_D5_E.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@JsonIgnoreProperties({"password", "username", "role", "authorities", "enabled", "accountNonExpired", "credentialsNonExpired", "accountNonLocked"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
