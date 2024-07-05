@@ -1,6 +1,7 @@
 package cristianmartucci.U5_W3_D5_E.services;
 
 import cristianmartucci.U5_W3_D5_E.entities.Event;
+import cristianmartucci.U5_W3_D5_E.entities.User;
 import cristianmartucci.U5_W3_D5_E.exceptions.BadRequestException;
 import cristianmartucci.U5_W3_D5_E.exceptions.NotFoundException;
 import cristianmartucci.U5_W3_D5_E.payloads.EventDTO;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,9 +58,11 @@ public class EventService {
         this.eventRepository.delete(event);
     }
 
-    public Event addUserToEvent(UUID currentUser, EventResponseDTO eventResponseDTO){
-        Event event = this.findByID(eventResponseDTO.eventId());
-        event.addUser(this.userService.findByID(currentUser));
-        return this.eventRepository.save(event);
-    }
+//    public Event addUserToEvent(UUID currentUser, EventResponseDTO eventResponseDTO){
+//        Event event = this.findByID(eventResponseDTO.eventId());
+//        List<User> list = event.getUserList();
+//        event.setUserList(event.getUserList(), event.);
+//        event.addUser(this.userService.findByID(currentUser));
+//        return this.eventRepository.save(event);
+//    }
 }

@@ -43,8 +43,4 @@ public class Event {
         this.userOrganizer = userOrganizer;
         this.userList = new ArrayList<>();
     }
-
-    public void addUser(User user){
-        this.userList.add(user);
-    }
 }
