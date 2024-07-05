@@ -1,6 +1,9 @@
 package cristianmartucci.U5_W3_D5_E.services;
 
 import cristianmartucci.U5_W3_D5_E.entities.Event;
+import cristianmartucci.U5_W3_D5_E.exceptions.BadRequestException;
+import cristianmartucci.U5_W3_D5_E.exceptions.NotFoundException;
+import cristianmartucci.U5_W3_D5_E.payloads.EventDTO;
 import cristianmartucci.U5_W3_D5_E.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +20,14 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Event save(Event event){
-        return this.eventRepository.save(event);
+    @Autowired
+    private UserService userService;
+
+    public Event save(EventDTO eventDTO){
+        if (this.eventRepository.findByPlaceAndDate(eventDTO.place(), eventDTO.date()).isEmpty()){
+            Event event = new Event(eventDTO.title(), eventDTO.description(), eventDTO.date(), eventDTO.place(), eventDTO.quantity(), this.userService.findByID(UUID.fromString(eventDTO.userOrganizerId())));
+            return this.eventRepository.save(event);
+        }else throw new BadRequestException("Evento già organizzato in data " + eventDTO.date() + " e luogo " + eventDTO.place());
     }
 
     public Page<Event> getAllEvent(int pageNumber, int pageSize, String sortBy){
@@ -28,7 +37,7 @@ public class EventService {
     }
 
     public Event findByID(UUID eventId){
-        return this.eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException());
+        return this.eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException(eventId));
     }
 
     public void delete(UUID eventId) {

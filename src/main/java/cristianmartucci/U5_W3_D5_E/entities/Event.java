@@ -28,4 +28,13 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "user_organizer_id")
     private User userOrganizer;
+
+    public Event(String title, String description, LocalDateTime date, String place, long quantity, User userOrganizer) {
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.place = place;
+        this.quantity = quantity;
+        this.userOrganizer = userOrganizer;
+    }
 }
