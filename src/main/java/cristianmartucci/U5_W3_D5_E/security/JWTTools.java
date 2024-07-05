@@ -1,6 +1,7 @@
 package cristianmartucci.U5_W3_D5_E.security;
 
 import cristianmartucci.U5_W3_D5_E.entities.User;
+import cristianmartucci.U5_W3_D5_E.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,7 @@ public class JWTTools {
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
         }catch (Exception error){
-            throw new Error();
+            throw new UnauthorizedException("Problemi col token! Per favore effettua di nuovo il login!");
         }
     }
 
