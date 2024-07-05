@@ -1,6 +1,7 @@
 package cristianmartucci.U5_W3_D5_E.controllers;
 
 import cristianmartucci.U5_W3_D5_E.entities.Event;
+import cristianmartucci.U5_W3_D5_E.entities.User;
 import cristianmartucci.U5_W3_D5_E.exceptions.BadRequestException;
 import cristianmartucci.U5_W3_D5_E.payloads.EventDTO;
 import cristianmartucci.U5_W3_D5_E.payloads.EventResponseDTO;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +51,11 @@ public class EventController {
     @PreAuthorize("hasAuthority('EVENT_ORGANIZER')")
     public void delete(@PathVariable UUID eventId) {
         this.eventService.delete(eventId);
+    }
+
+    @PutMapping("/reservation")
+    @PreAuthorize("hasAnyAuthority('EVENT_ORGANIZER', 'NORMAL_USER')")
+    public Event updateProfile(@AuthenticationPrincipal User currentAuthenticatedUser, @RequestBody EventResponseDTO eventResponseDTO){
+        return this.eventService.addUserToEvent(currentAuthenticatedUser.getId(), eventResponseDTO);
     }
 }

@@ -4,6 +4,7 @@ import cristianmartucci.U5_W3_D5_E.entities.Event;
 import cristianmartucci.U5_W3_D5_E.exceptions.BadRequestException;
 import cristianmartucci.U5_W3_D5_E.exceptions.NotFoundException;
 import cristianmartucci.U5_W3_D5_E.payloads.EventDTO;
+import cristianmartucci.U5_W3_D5_E.payloads.EventResponseDTO;
 import cristianmartucci.U5_W3_D5_E.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponseException;
 
 import java.util.UUID;
 
@@ -54,5 +54,11 @@ public class EventService {
     public void delete(UUID eventId) {
         Event event = this.findByID(eventId);
         this.eventRepository.delete(event);
+    }
+
+    public Event addUserToEvent(UUID currentUser, EventResponseDTO eventResponseDTO){
+        Event event = this.findByID(eventResponseDTO.eventId());
+        event.addUser(this.userService.findByID(currentUser));
+        return this.eventRepository.save(event);
     }
 }

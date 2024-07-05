@@ -19,6 +19,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     public User save(UserDTO userDTO){
         if (this.userRepository.findByEmail(userDTO.email()).isEmpty()){
             User user = new User(userDTO.email(), passwordEncoder.encode(userDTO.password()));

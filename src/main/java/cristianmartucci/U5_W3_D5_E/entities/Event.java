@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +31,9 @@ public class Event {
     @JoinColumn(name = "user_organizer_id")
     private User userOrganizer;
 
+    @ManyToMany(mappedBy = "eventList")
+    private List<User> userList;
+
     public Event(String title, String description, LocalDateTime date, String place, long quantity, User userOrganizer) {
         this.title = title;
         this.description = description;
@@ -36,5 +41,10 @@ public class Event {
         this.place = place;
         this.quantity = quantity;
         this.userOrganizer = userOrganizer;
+        this.userList = new ArrayList<>();
+    }
+
+    public void addUser(User user){
+        this.userList.add(user);
     }
 }
