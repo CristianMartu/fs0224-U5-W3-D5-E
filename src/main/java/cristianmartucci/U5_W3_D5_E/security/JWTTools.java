@@ -21,4 +21,17 @@ public class JWTTools {
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
+
+    public void verifyToken(String token){
+        try {
+            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build().parse(token);
+        }catch (Exception error){
+            throw new Error();
+        }
+    }
+
+    public String extractIdFromToken(String token){
+        return Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secret.getBytes())).build()
+                .parseSignedClaims(token).getPayload().getSubject();
+    }
 }
